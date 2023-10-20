@@ -8,6 +8,7 @@ fastapi = {extras = ["all"], version = "*"}
 psycopg = {extras = ["binary"], version = "*"}
 icecream = "*"
 tzlocal = "*"
+sqlalchemy = "*"
 
 [dev-packages]
 
