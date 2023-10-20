@@ -8,11 +8,30 @@ from . import schemas
 from . import models
 from .database import engine, get_db
 
-# models.Base.metadata.drop_all(bind=engine)
-# models.Base.metadata.create_all(bind=engine)
-
+DEBUG = True
 
 app = FastAPI()
+
+
+
+if DEBUG:
+    ic.enable()
+    @app.on_event("startup")
+    def startup_event():
+        models.Base.metadata.drop_all(bind=engine)
+        models.Base.metadata.create_all(bind=engine)
+        with Session(engine) as session:
+            posts = [
+                models.Post(title="title 1", content="content 1", published=True),
+                models.Post(title="title 2", content="content 2"),
+            ]
+            for p in posts:
+                session.add(p)
+            session.commit()
+        del posts
+
+else:
+    ic.disable()
 
 
 @app.get("/")
