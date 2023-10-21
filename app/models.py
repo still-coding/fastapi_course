@@ -21,3 +21,13 @@ class Post(Base):
 
     def __repr__(self):
         return f'Post(id={self.id}, title={self.title}, created_at={self.created_at})'
+
+class User(Base):
+    __tablename__ = 'users'
+    id: Mapped[int] = mapped_column(Identity(), primary_key=True)
+    email: Mapped[str] = mapped_column(String(255), unique=True)
+    password: Mapped[str] = mapped_column(String(255))
+    created_at: Mapped[datetime] = mapped_column(server_default=func.CURRENT_TIMESTAMP())
+
+    def __repr__(self):
+        return f'User(id={self.id}, email={self.email}, created_at={self.created_at})'

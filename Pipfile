@@ -9,6 +9,7 @@ psycopg = {extras = ["binary"], version = "*"}
 icecream = "*"
 tzlocal = "*"
 sqlalchemy = "*"
+passlib = {extras = ["bcrypt"], version = "*"}
 
 [dev-packages]
 
