@@ -1,5 +1,3 @@
-from typing import List
-
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 
@@ -7,7 +5,7 @@ from .. import models, schemas
 from ..database import get_db
 from ..utils import hash_password
 
-router = APIRouter(prefix='/users', tags=['Users'])
+router = APIRouter(prefix="/users", tags=["Users"])
 
 
 @router.post(

@@ -1,6 +1,10 @@
+from os import getenv
+
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+load_dotenv()
 
 ###
 # dont forget to execute
@@ -10,10 +14,7 @@ from sqlalchemy.orm import sessionmaker
 ###
 
 
-# TODO: move credentials to dotenv
-SQLALCHEMY_DATABASE_URL = "postgresql+psycopg://ivan:@192.168.2.2:5433/fastapi_course"
-
-engine = create_engine(SQLALCHEMY_DATABASE_URL)
+engine = create_engine(getenv("DB_URL"))
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 

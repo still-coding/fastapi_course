@@ -10,6 +10,8 @@ icecream = "*"
 tzlocal = "*"
 sqlalchemy = "*"
 passlib = {extras = ["bcrypt"], version = "*"}
+python-jose = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
