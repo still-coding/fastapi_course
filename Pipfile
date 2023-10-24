@@ -12,9 +12,8 @@ sqlalchemy = "*"
 passlib = {extras = ["bcrypt"], version = "*"}
 python-jose = "*"
 pydantic = {extras = ["dotenv"], version = "*"}
-alembic = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.11"
+python_version = "3"

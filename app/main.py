@@ -10,12 +10,22 @@ from .routers.user import router as user_router
 from .routers.vote import router as vote_router
 from .utils import hash_password
 
+from fastapi.middleware.cors import CORSMiddleware
 
 
 DEBUG = True
 ic_install()
 
 app = FastAPI()
+
+# TODO: set up origins
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 routers = (post_router, user_router, auth_router, vote_router)
 for router in routers:
