@@ -7,6 +7,7 @@ from .database import engine
 from .routers.auth import router as auth_router
 from .routers.post import router as post_router
 from .routers.user import router as user_router
+from .routers.vote import router as vote_router
 from .utils import hash_password
 
 
@@ -15,9 +16,10 @@ DEBUG = True
 ic_install()
 
 app = FastAPI()
-app.include_router(post_router)
-app.include_router(user_router)
-app.include_router(auth_router)
+
+routers = (post_router, user_router, auth_router, vote_router)
+for router in routers:
+    app.include_router(router)
 
 
 if DEBUG:

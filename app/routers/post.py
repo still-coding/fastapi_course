@@ -1,29 +1,42 @@
-from typing import List, Optional
+from typing import List, Optional, Tuple
 
 from fastapi import APIRouter, Depends, HTTPException, status
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, aliased
+from sqlalchemy import func, select
 
 from .. import models, oauth2, schemas
 from ..database import get_db
 
 router = APIRouter(prefix="/posts", tags=["Posts"])
 
+# TODO: uptate queries to sqlalchemy 2.0 quering API
 
-@router.get("/", response_model=List[schemas.PostResponse])
+@router.get("/", response_model=List[schemas.PostWithVotes])
 def get_posts(
     db: Session = Depends(get_db),
     current_user: models.User = Depends(oauth2.get_current_user),
     limit: int = 10,
     skip: int = 0,
     search: Optional[str] = None,
-) -> List[schemas.PostResponse]:
+):
+    query = (
+        select(
+            models.Post.id,
+            models.Post.title,
+            models.Post.content,
+            models.Post.published,
+            models.Post.author_id,
+            models.Post.created_at,
+            func.count(models.Vote.user_id).label("votes"),
+        )
+        .join(models.Vote, models.Post.id == models.Vote.post_id, isouter=True)
+        .group_by(models.Post.id)
+    )
     if search:
-        posts = db.query(models.Post).filter(models.Post.title.contains(search))
-    else:
-        posts = db.query(models.Post)
-    ic(posts)
-    ic(current_user)
-    return posts.limit(limit).offset(skip).all()
+        query = query.filter(models.Post.title.contains(search))
+    ic(str(query))
+    posts = db.execute(query.limit(limit).offset(skip))
+    return posts
 
 
 @router.post(

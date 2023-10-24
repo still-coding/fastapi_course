@@ -12,6 +12,7 @@ sqlalchemy = "*"
 passlib = {extras = ["bcrypt"], version = "*"}
 python-jose = "*"
 pydantic = {extras = ["dotenv"], version = "*"}
+alembic = "*"
 
 [dev-packages]
 

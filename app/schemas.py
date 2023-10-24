@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import Optional
-
+from enum import Enum
 from pydantic import BaseModel, EmailStr
 
 # TODO: make update optional
@@ -40,11 +40,14 @@ class PostCreate(PostBase):
 class PostResponse(PostBase):
     id: int
     author_id: int
-    author: UserResponse
     created_at: datetime
 
     class Config:
         from_attributes = True
+
+
+class PostWithVotes(PostResponse):
+    votes: int
 
 
 class Token(BaseModel):
@@ -54,3 +57,13 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     id: Optional[int] = None
+
+
+class VoteDirection(Enum):
+    UP = 1
+    DOWN = 0
+
+
+class Vote(BaseModel):
+    post_id: int
+    direction: VoteDirection

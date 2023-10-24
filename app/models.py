@@ -41,3 +41,13 @@ class User(Base):
 
     def __repr__(self):
         return f"User(id={self.id}, email={self.email}, created_at={self.created_at})"
+
+
+class Vote(Base):
+    __tablename__ = "votes"
+    user_id: Mapped[int] = mapped_column(
+        ForeignKey("users.id", ondelete="cascade"), primary_key=True
+    )
+    post_id: Mapped[int] = mapped_column(
+        ForeignKey("posts.id", ondelete="cascade"), primary_key=True
+    )
