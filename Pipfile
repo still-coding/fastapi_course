@@ -11,7 +11,7 @@ tzlocal = "*"
 sqlalchemy = "*"
 passlib = {extras = ["bcrypt"], version = "*"}
 python-jose = "*"
-python-dotenv = "*"
+pydantic = {extras = ["dotenv"], version = "*"}
 
 [dev-packages]
 

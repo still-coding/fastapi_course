@@ -10,6 +10,7 @@ from .routers.user import router as user_router
 from .utils import hash_password
 
 
+
 DEBUG = True
 ic_install()
 

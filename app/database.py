@@ -1,10 +1,8 @@
-from os import getenv
+from .config import settings
 
-from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-load_dotenv()
 
 ###
 # dont forget to execute
@@ -14,7 +12,7 @@ load_dotenv()
 ###
 
 
-engine = create_engine(getenv("DB_URL"))
+engine = create_engine(settings.db_url)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
